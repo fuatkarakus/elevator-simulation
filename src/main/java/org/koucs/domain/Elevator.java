@@ -1,15 +1,15 @@
 package org.koucs.domain;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
 public class Elevator implements Runnable{
 
-    Integer max_capacity = 10;
+    private Integer max_capacity = 10;
+    private Integer work = 200;
 
-    BlockingQueue<Integer> inside = new LinkedBlockingQueue<>(max_capacity);
+    private Process process;
 
-    Integer work_time = 200;
+    public Elevator(Process process) {
+        this.process = process;
+    }
 
     @Override
     public void run() {

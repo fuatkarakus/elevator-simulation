@@ -1,19 +1,21 @@
 package org.koucs.domain;
 
-public enum Floor {
-    GROUND(0),
-    FIRST(1),
-    SECOND(2),
-    THIRD(3),
-    FOURTH(4);
+import lombok.Data;
 
-    private final Integer num;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-    private Floor(Integer num) {
-        this.num = num;
+@Data
+public class Floor {
+
+    private FloorNumber floorNumber;
+    private BlockingQueue<Person> waitingList;
+    private BlockingQueue<Person> elevatorList;
+
+    public Floor(FloorNumber floorNumber) {
+        this.floorNumber = floorNumber;
+        this.waitingList =  new LinkedBlockingQueue<>();
+        this.elevatorList =  new LinkedBlockingQueue<>();
     }
 
-    public int getFloorNumber() {
-        return this.num;
-    }
 }

@@ -2,43 +2,28 @@ package org.koucs.domain;
 
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import static org.koucs.domain.Floor.*;
-
 @Data
 public class Building {
 
-    HashMap<Floor, BlockingQueue<Integer>> upToFloorFirst;
-    HashMap<Floor, BlockingQueue<Integer>> upToFloorSecond;
-    HashMap<Floor, BlockingQueue<Integer>> upToFloorThird;
-    HashMap<Floor, BlockingQueue<Integer>> upToFloorFourth;
+    private Floor ground;
+    private Floor first;
+    private Floor second;
+    private Floor third;
+    private Floor fourth;
 
-    HashMap<Floor, BlockingQueue<Integer>> downToFloorFirst;
-    HashMap<Floor, BlockingQueue<Integer>> downToFloorSecond;
-    HashMap<Floor, BlockingQueue<Integer>> downToFloorThird;
-    HashMap<Floor, BlockingQueue<Integer>> downToFloorFourth;
+    private Elevator eFirst;
+    private Elevator eSecond;
+    private Elevator eThird;
+    private Elevator eFourth;
+    private Elevator eFifth;
 
-     public Building() {
-         this.upToFloorFirst = new HashMap<>();
-         upToFloorFirst.put(FIRST, new LinkedBlockingQueue<>());
-         this.upToFloorSecond = new HashMap<>();
-         upToFloorSecond.put(SECOND, new LinkedBlockingQueue<>());
-         this.upToFloorThird = new HashMap<>();
-         upToFloorThird.put(THIRD, new LinkedBlockingQueue<>());
-         this.upToFloorFourth = new HashMap<>();
-         upToFloorFourth.put(FOURTH, new LinkedBlockingQueue<>());
+    public Building() {
+        ground = new Floor(FloorNumber.GROUND);
+        first = new Floor(FloorNumber.FIRST);
+        second = new Floor(FloorNumber.SECOND);
+        third = new Floor(FloorNumber.THIRD);
+        fourth = new Floor(FloorNumber.FOURTH);
 
-         this.downToFloorFirst = new HashMap<>();
-         downToFloorFirst.put(FIRST, new LinkedBlockingQueue<>());
-         this.downToFloorSecond = new HashMap<>();
-         downToFloorSecond.put(SECOND, new LinkedBlockingQueue<>());
-         this.downToFloorThird = new HashMap<>();
-         downToFloorThird.put(THIRD, new LinkedBlockingQueue<>());
-         this.downToFloorFourth = new HashMap<>();
-         downToFloorFourth.put(FOURTH, new LinkedBlockingQueue<>());
      }
 
 }

@@ -2,14 +2,16 @@ package org.koucs.service;
 
 import lombok.SneakyThrows;
 import org.koucs.domain.Building;
-import org.koucs.domain.Floor;
+import org.koucs.domain.FloorNumber;
+import org.koucs.domain.Person;
 import org.koucs.util.Util;
 
-import static org.koucs.domain.Floor.FIRST;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
-public class LoginThread implements Runnable{
+public class LoginThread implements Runnable {
 
-    Integer work_time = 500;
+    Integer work = 500;
 
     Building building;
 
@@ -23,22 +25,27 @@ public class LoginThread implements Runnable{
 
         while (true) {
 
-            Floor randomFloor = Util.randomFloor();
-            // Integer random
-            switch (randomFloor) {
-                case FIRST:
-                    building.getUpToFloorFirst().get(FIRST).add(1);
-                case SECOND:
-                    continue;
-                case THIRD:
-                    continue;
-                case FOURTH:
-                    continue;
+            FloorNumber randomFloorNumber = Util.randomFloor();
+            List<Person> personList = Util.randomLoginPerson();
 
+            switch (randomFloorNumber) {
+                case FIRST:
+                    addTo(building.getFirst().getWaitingList(), personList);
+                case SECOND:
+                    addTo(building.getSecond().getWaitingList(), personList);
+                case THIRD:
+                    addTo(building.getThird().getWaitingList(), personList);
+                case FOURTH:
+                    addTo(building.getFourth().getWaitingList(), personList);
             }
-            Thread.sleep(work_time);
+
+            Thread.sleep(work);
         }
 
+    }
+
+    private static void addTo(  BlockingQueue<Person> waitingList , List<Person> personList) {
+        waitingList.addAll(personList);
     }
 
 }

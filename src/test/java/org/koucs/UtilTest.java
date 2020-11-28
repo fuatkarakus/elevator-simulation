@@ -1,6 +1,7 @@
 package org.koucs;
 
 import org.junit.Test;
+import org.koucs.domain.FloorNumber;
 import org.koucs.util.Util;
 
 import static org.junit.Assert.assertTrue;
@@ -14,11 +15,11 @@ public class UtilTest {
         assertTrue(Util.randomLogin() < 11 );
     }
 
-    @Test
-    public void test2() {
-        int i =  randomFloor();
-        System.out.println(i);
-        assertTrue(randomFloor() < 5 );
-    }
+//    @Test
+//    public void test2() {
+//        FloorNumber i =  randomFloor();
+//        System.out.println(i);
+//        assertTrue(randomFloor() < 5 );
+//    }
 
 }
