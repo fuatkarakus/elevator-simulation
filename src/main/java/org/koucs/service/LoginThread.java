@@ -31,12 +31,18 @@ public class LoginThread implements Runnable {
             switch (randomFloorNumber) {
                 case FIRST:
                     addTo(building.getFirst().getWaitingList(), personList);
+                    break;
                 case SECOND:
                     addTo(building.getSecond().getWaitingList(), personList);
+                    break;
                 case THIRD:
                     addTo(building.getThird().getWaitingList(), personList);
+                    break;
                 case FOURTH:
                     addTo(building.getFourth().getWaitingList(), personList);
+                    break;
+                default:
+                    break;
             }
 
             Thread.sleep(work);

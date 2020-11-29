@@ -2,13 +2,13 @@ package org.koucs.domain;
 
 public class Person {
 
-    private Integer person;
+    private Integer id;
 
     public Person() {
-        person = 1;
+        id = 1;
     }
 
-    public Integer getPerson() {
-        return person;
+    public Integer get() {
+        return id;
     }
 }
