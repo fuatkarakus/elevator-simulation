@@ -9,13 +9,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Floor {
 
     private FloorNumber floorNumber;
-    private BlockingQueue<Person> waitingList;
-    private BlockingQueue<Person> elevatorList;
+    private BlockingQueue<Person> people;
+    private BlockingQueue<Person> elevatorQueue;
 
     public Floor(FloorNumber floorNumber) {
         this.floorNumber = floorNumber;
-        this.waitingList =  new LinkedBlockingQueue<>();
-        this.elevatorList =  new LinkedBlockingQueue<>();
+        this.people =  new LinkedBlockingQueue<>();
+        this.elevatorQueue =  new LinkedBlockingQueue<>();
     }
 
 }

@@ -23,6 +23,14 @@ public class Util {
         return personList;
     }
 
+    public static List<Person> randomExitPerson() {
+        List<Person> personList = new ArrayList<>();
+        for (int i =0; i < randomExit(); i++) {
+            personList.add(new Person());
+        }
+        return personList;
+    }
+
     public static Integer randomExit() {
         return new Random().nextInt(5 - 1 + 1) + 1;
     }
