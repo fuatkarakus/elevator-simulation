@@ -18,7 +18,9 @@ public class Util {
     public static List<Person> randomLoginPerson() {
         List<Person> personList = new ArrayList<>();
         for (int i =0; i < randomLogin(); i++) {
-            personList.add(new Person());
+            Person person =  new Person();
+            person.setCurrent(FloorNumber.GROUND);
+            personList.add(person);
         }
         return personList;
     }
@@ -38,6 +40,5 @@ public class Util {
     public static FloorNumber randomFloor() {
         return FloorNumber.values()[new Random().nextInt(FloorNumber.values().length) + 1];
     }
-
 
 }

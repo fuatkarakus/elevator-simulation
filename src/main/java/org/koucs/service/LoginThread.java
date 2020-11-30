@@ -27,27 +27,19 @@ public class LoginThread implements Runnable {
     @Override
     public void run() {
         try {
+
             while (true) {
 
-                FloorNumber randomFloorNumber = Util.randomFloor();
                 List<Person> personList = Util.randomLoginPerson();
 
-                switch (randomFloorNumber) {
-                    case FIRST:
-                        addTo(building.getFirst().getPeople(), personList);
-                        break;
-                    case SECOND:
-                        addTo(building.getSecond().getPeople(), personList);
-                        break;
-                    case THIRD:
-                        addTo(building.getThird().getPeople(), personList);
-                        break;
-                    case FOURTH:
-                        addTo(building.getFourth().getPeople(), personList);
-                        break;
-                    default:
-                        break;
+                for (Person person : personList) {
+
+                    FloorNumber randomFloorNumber = Util.randomFloor();
+                    person.setDestination(randomFloorNumber);
+
                 }
+
+                addTo( building.getGround().getPeople(), personList);
 
                 Thread.sleep(work);
             }
@@ -56,6 +48,7 @@ public class LoginThread implements Runnable {
             isRunning = false;
             log.error(e.getMessage());
         }
+
     }
 
     private static void addTo(  BlockingQueue<Person> waitingList , List<Person> personList) {
