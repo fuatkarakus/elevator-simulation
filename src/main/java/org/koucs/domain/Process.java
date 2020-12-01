@@ -8,7 +8,9 @@ import java.util.concurrent.BlockingQueue;
 @Getter
 public class Process {
 
+    // person list
     private final BlockingQueue<Person> personList;
+    // person objesinde var
     private final FloorNumber to;
     private final FloorNumber from;
 
