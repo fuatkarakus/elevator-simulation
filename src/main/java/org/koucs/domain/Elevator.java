@@ -5,10 +5,12 @@ public class Elevator implements Runnable{
     private final Integer max_capacity = 10;
     private final Integer work = 200;
 
-    private Process process;
+    private Direction direction;
 
-    public Elevator(Process process) {
-        this.process = process;
+    private Building building;
+
+    public Elevator(Building building) {
+        this.building = building;
     }
 
     @Override

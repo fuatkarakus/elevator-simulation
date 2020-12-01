@@ -2,6 +2,9 @@ package org.koucs.domain;
 
 import lombok.Data;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Data
 public class Building {
 
@@ -24,9 +27,9 @@ public class Building {
         third = new Floor(FloorNumber.THIRD);
         fourth = new Floor(FloorNumber.FOURTH);
 
-     }
+    }
 
-     public Floor getFLoor( FloorNumber floorNumber ) {
+    public Floor getFLoor( FloorNumber floorNumber ) {
         Floor floor;
         switch (floorNumber) {
             case GROUND:
@@ -48,6 +51,14 @@ public class Building {
                 throw new IllegalStateException("Unexpected value: " + floorNumber);
         }
         return floor;
-     }
+    }
+
+    public List<Floor> floors() {
+        return Arrays.asList(ground, first, second, third, fourth);
+    }
+
+    public List<Elevator> elevators() {
+        return Arrays.asList(eFirst, eSecond, eThird, eFourth, eFifth);
+    }
 
 }
