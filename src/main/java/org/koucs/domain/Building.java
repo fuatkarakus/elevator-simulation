@@ -2,6 +2,7 @@ package org.koucs.domain;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,11 +15,8 @@ public class Building {
     private Floor third;
     private Floor fourth;
 
-    private Elevator eFirst;
-    private Elevator eSecond;
-    private Elevator eThird;
-    private Elevator eFourth;
-    private Elevator eFifth;
+    private Elevator consist;
+    private List<Elevator> elevators;
 
     public Building() {
         ground = new Floor(FloorNumber.GROUND);
@@ -27,6 +25,7 @@ public class Building {
         third = new Floor(FloorNumber.THIRD);
         fourth = new Floor(FloorNumber.FOURTH);
 
+        elevators = new ArrayList<>(4);
     }
 
     public Floor getFLoor( FloorNumber floorNumber ) {
@@ -58,7 +57,10 @@ public class Building {
     }
 
     public List<Elevator> elevators() {
-        return Arrays.asList(eFirst, eSecond, eThird, eFourth, eFifth);
+        List<Elevator> elevators1 = new ArrayList<>();
+        elevators1.add(consist);
+        elevators1.addAll(this.elevators);
+        return elevators1;
     }
 
 }
