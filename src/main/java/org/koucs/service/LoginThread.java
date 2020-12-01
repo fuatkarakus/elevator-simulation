@@ -10,6 +10,7 @@ import org.koucs.util.Util;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
+// todo https://stackoverflow.com/questions/54394042/java-how-to-avoid-using-thread-sleep-in-a-loop
 @Slf4j
 public class LoginThread implements Runnable {
 
@@ -27,6 +28,8 @@ public class LoginThread implements Runnable {
     @Override
     public void run() {
         try {
+
+            isRunning = true;
 
             while (true) {
 

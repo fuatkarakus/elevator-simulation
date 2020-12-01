@@ -28,7 +28,10 @@ public class Util {
     public static List<Person> randomExitPerson() {
         List<Person> personList = new ArrayList<>();
         for (int i =0; i < randomExit(); i++) {
-            personList.add(new Person());
+            Person person =  new Person();
+            person.setDestination(FloorNumber.GROUND);
+            personList.add(person);
+            personList.add(person);
         }
         return personList;
     }

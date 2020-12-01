@@ -26,4 +26,28 @@ public class Building {
 
      }
 
+     public Floor getFLoor( FloorNumber floorNumber ) {
+        Floor floor;
+        switch (floorNumber) {
+            case GROUND:
+                floor = getGround();
+                break;
+            case FIRST:
+                floor = getFirst();
+                break;
+            case SECOND:
+                floor = getSecond();
+                break;
+            case THIRD:
+                floor = getThird();
+                break;
+            case FOURTH:
+                floor = getFourth();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + floorNumber);
+        }
+        return floor;
+     }
+
 }
