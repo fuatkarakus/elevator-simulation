@@ -2,11 +2,12 @@ package org.koucs.domain;
 
 import lombok.Data;
 
+import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @Data
-public class Floor implements Comparable<Floor> {
+public class Floor implements Comparable<Floor>, Comparator<Floor> {
 
     private FloorNumber floorNumber;
     private BlockingQueue<Person> people;
@@ -21,5 +22,10 @@ public class Floor implements Comparable<Floor> {
     @Override
     public int compareTo(Floor floor) {
         return Integer.compare(getElevatorQueue().size(), floor.getElevatorQueue().size());
+    }
+
+    @Override
+    public int compare(Floor o1, Floor o2) {
+        return Integer.compare(o1.getFloorNumber().num(), o2.getFloorNumber().num());
     }
 }

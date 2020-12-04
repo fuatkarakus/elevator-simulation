@@ -14,7 +14,7 @@ public enum FloorNumber {
         this.num = num;
     }
 
-    public int getFloorNumber() {
+    public int num() {
         return this.num;
     }
 }
