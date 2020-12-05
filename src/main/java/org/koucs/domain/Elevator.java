@@ -1,14 +1,19 @@
 package org.koucs.domain;
 
-import java.util.Collections;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import static org.koucs.domain.FloorNumber.FOURTH;
+import static org.koucs.domain.FloorNumber.GROUND;
+
+@Slf4j
 public class Elevator implements Runnable{
 
-    private final Integer max_capacity = 10;
+    private static final Integer MAX_CAPACITY = 10;
 
-    private final Integer work = 200;
+    private static final Integer WORK = 200;
 
     private boolean isRunning = false;
 
@@ -16,35 +21,76 @@ public class Elevator implements Runnable{
 
     private Floor current;
 
-    private Building building;
+    private final Building building;
 
-    private BlockingQueue<Person> people;
+    private final BlockingQueue<Person> people;
 
     public Elevator(Building building) {
         this.building = building;
-        this.current = building.getGround();
-        this.people = new ArrayBlockingQueue<>(max_capacity);
+        this.people = new ArrayBlockingQueue<>(MAX_CAPACITY);
+        this.direction = Direction.UP;
     }
 
     @Override
     public void run() {
         try {
             while (true) {
-                Collections.sort(building.floors());
-                for (Floor floor : building.floors()) {
-                    if (floor == current) {
+                isRunning = true;
+
+                if (direction.equals(Direction.UP)) {
+
+                    for (Floor floor : building.upFloors()) {
                         current = floor;
-                        while (current.getElevatorQueue().size() > 0 ) {
-                            if (people.size() == 10) {
-                                break;
+                        // asansörden insan indir
+                        for ( Person person : people) {
+                            if (person.getDestination() == current.getFloorNumber()) {
+                                people.remove(person);
+                                current.getPeople().put(person);
+                            }
+                        }
+
+                        // asansöre insan alma işlemi
+                        while (current.getElevatorQueue().isEmpty()) {
+                            if (people.size() == MAX_CAPACITY) {
+                                continue;
                             }
                             people.put(current.getElevatorQueue().take());
                         }
+
+                        if (current.getFloorNumber() == FOURTH) {
+                            direction = Direction.DOWN;
+                        }
+                        Thread.sleep(WORK);
+                    }
+                }
+                if (direction.equals(Direction.DOWN)) {
+                    for (Floor floor : building.downFloors()) {
+                        current = floor;
+                        // asansörden insan indir
+                        for ( Person person : people) {
+                            if (person.getDestination() == current.getFloorNumber()) {
+                                current.getPeople().put(person);
+                            }
+                        }
+
+                        // asansöre insan alma işlemi
+                        while (current.getElevatorQueue().isEmpty()) {
+                            if (people.size() == MAX_CAPACITY) {
+                                continue;
+                            }
+                            people.put(current.getElevatorQueue().take());
+                        }
+
+                        if (current.getFloorNumber() == GROUND) {
+                            direction = Direction.UP;
+                        }
+                        Thread.sleep(WORK);
                     }
                 }
             }
         } catch (Exception e) {
-
+            isRunning = false;
+            log.error(e.getMessage());
         }
 
     }

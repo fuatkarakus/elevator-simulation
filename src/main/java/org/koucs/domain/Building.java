@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -52,8 +53,18 @@ public class Building {
         return floor;
     }
 
-    public List<Floor> floors() {
-        return Arrays.asList(ground, first, second, third, fourth);
+    // asansörün sıralı çalışması yukarı
+    public List<Floor> upFloors() {
+        List<Floor> floors = Arrays.asList(ground, first, second, third, fourth);
+        Collections.sort(floors);
+        return floors;
+    }
+
+    // asansörün sıları çalışması aşağı
+    public List<Floor> downFloors() {
+        List<Floor> floors = Arrays.asList(ground, first, second, third, fourth);
+        Collections.reverse(floors);
+        return floors;
     }
 
     public List<Elevator> elevators() {
@@ -63,4 +74,16 @@ public class Building {
         return elevators1;
     }
 
+    @Override
+    public String toString() {
+        return "Building{" +
+                "ground=" + ground +
+                ", first=" + first +
+                ", second=" + second +
+                ", third=" + third +
+                ", fourth=" + fourth +
+                ", consist=" + consist +
+                ", elevators=" + elevators +
+                '}';
+    }
 }
