@@ -46,7 +46,7 @@ public class Elevator implements Runnable{
                     for (Floor floor : building.upFloors()) {
                         current = floor;
                         // asansörden insan indir
-                        log.info("{}. asansörde bulunan insan sayısı {}", name, people.size());
+                        log.info("{}. asansör {}. katta, {} taşıdığı insan ", name, current.getFloorNumber().num(), people.size());
                         for ( Person person : people) {
                             int count = 0;
                             if (person.getDestination() == current.getFloorNumber()) {
