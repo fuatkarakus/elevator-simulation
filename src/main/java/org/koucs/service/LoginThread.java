@@ -14,7 +14,7 @@ import java.util.concurrent.BlockingQueue;
 @Slf4j
 public class LoginThread implements Runnable {
 
-    Integer work = 1000;
+    Integer work = 500;
 
     private boolean isRunning = false;
 
@@ -56,9 +56,9 @@ public class LoginThread implements Runnable {
     }
 
     private static void addTo(  BlockingQueue<Person> waitingList , List<Person> personList) {
-        //log.info("0. kata {} tane insan ekledi.", personList.size());
+        log.debug("0. kata {} tane insan ekledi.", personList.size());
         waitingList.addAll(personList);
-        // log.info("0. kattaki insan sayısı {} ", waitingList.size());
+        log.debug("0. kattaki insan sayısı {} ", waitingList.size());
     }
 
     public boolean isRunning() {

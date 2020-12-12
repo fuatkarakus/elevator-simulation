@@ -55,13 +55,13 @@ public class Elevator implements Runnable{
                             if (person.getDestination() == current.getFloorNumber()) {
                                 boolean drop = people.remove(person);
 
-                                if (current.getFloorNumber() != GROUND) { // eğer 0. kata indiriyorsak bu insan binadan çıkmış demektir. yani tekrardan bi kata koymaya gerek yok
+                                //if (current.getFloorNumber() != GROUND) { // eğer 0. kata indiriyorsak bu insan binadan çıkmış demektir. yani tekrardan bi kata koymaya gerek yok
                                     current.getPeople().put(person);
-                                }
+                                //}
                                 count ++;
                             }
                         }
-                        log.info("{}. asansörden indirilen insan sayısı {}", name, count);
+                        log.debug("{}. asansörden indirilen insan sayısı {}", name, count);
 
 
                         while (!current.getElevatorQueue().isEmpty()) { // asansör kuyruğunda insanlar varsa onları asansöre al
@@ -98,9 +98,9 @@ public class Elevator implements Runnable{
                                 //log.info("insanı bıraktı mı : " + drop);
 
                                 // eğer adam 0. kata bırakıldı ise binadan çıkış yapmış demektir. Dolayısıyla tekrar kattaki insanlara eklemeye gerek yok.
-                                if (current.getFloorNumber() != GROUND) {
+                               // if (current.getFloorNumber() != GROUND) {
                                     current.getPeople().put(person);
-                                }
+                                //}
 
                                 count ++;
                             }

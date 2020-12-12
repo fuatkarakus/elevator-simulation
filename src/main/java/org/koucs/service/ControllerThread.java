@@ -46,8 +46,9 @@ public class ControllerThread implements Runnable {
 
                         // eğer çalışmayan elevator varsa çalıştırıyor. yoksa şimdilik pass geçiyor
                         if (elevator.isPresent()) {
-                            log.info("Controller Thread bir asansör çalıştırıyor.");
-                            service.submit(elevator.get());
+                            Elevator elevator1 = elevator.get();
+                            log.info("Controller Thread {}. asansörü çalıştırıyor.", elevator1.getName());
+                            service.submit(elevator1);
                             /*
                             switch (elevator.get().getName()){
                                 case "2":
@@ -72,12 +73,9 @@ public class ControllerThread implements Runnable {
 
                 // Boşa çalışan asansörleri durdur
                 // eğer count 5 ise yani tüm binada asansör bekleyenlerin sayısı 20 değil ise ve tüm asansörler çalışıyorsa
-//                if (count == 5 && building.getElevators().stream().allMatch(e -> e.isRunning())) {
-//                    building.getTSecond().join();
-//                    building.getTThird().join();
-//                    building.getTFourth().join();
-//                    building.getTFifth().join();
-//                }
+                if (count == 5 && building.getElevators().stream().allMatch(e -> e.isRunning())) {
+                    building.getElevators().stream().filter(Elevator::isRunning).forEach(Elevator::stop);
+                }
 
                 Thread.sleep(WORK);
             }

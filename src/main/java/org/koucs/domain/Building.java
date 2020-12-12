@@ -98,23 +98,23 @@ public class Building {
         StringBuilder sb = new StringBuilder();
         sb
         .append("Binanın Durumu : \n")
-            .append("1. KAT : \n")
-                .append("\t Katta Bulunan  Insan Sayısı:  ").append(ground.getPeople().size()).append("\n")
-                .append("\t Katta Bulunan  Asansör Bekleyen Insan Sayısı:  ").append(ground.getElevatorQueue().size()).append("\n")
+            .append("GİRİŞ KAT : \n")
+                .append("\t Binadan Toplam Çıkış Yapan Insan Sayısı:  ").append(ground.getPeople().size()).append("\n")
+                .append("\t Binaya Yeni Giriş Yapan Insan Sayısı:  ").append(ground.getElevatorQueue().size()).append("\n")
 
-            .append("2. KAT : \n")
+            .append("1. KAT : \n")
                 .append("\t Katta Bulunan  Insan Sayısı:  ").append(first.getPeople().size()).append("\n")
                 .append("\t Katta Bulunan  Asansör Bekleyen Insan Sayısı:  ").append(first.getElevatorQueue().size()).append("\n")
 
-            .append("3. KAT : \n")
+            .append("2. KAT : \n")
                 .append("\t Katta Bulunan  Insan Sayısı:  ").append(second.getPeople().size()).append("\n")
                 .append("\t Katta Bulunan  Asansör Bekleyen Insan Sayısı:  ").append(second.getElevatorQueue().size()).append("\n")
 
-            .append("4. KAT : \n")
+            .append("3. KAT : \n")
                 .append("\t Katta Bulunan  Insan Sayısı:  ").append(third.getPeople().size()).append("\n")
                 .append("\t Katta Bulunan  Asansör Bekleyen Insan Sayısı:  ").append(third.getElevatorQueue().size()).append("\n")
 
-            .append("5. KAT : \n")
+            .append("4. KAT : \n")
                 .append("\t Katta Bulunan  Insan Sayısı:  ").append(fourth.getPeople().size()).append("\n")
                 .append("\t Katta Bulunan  Asansör Bekleyen Insan Sayısı:  ").append(fourth.getElevatorQueue().size()).append("\n");
 
