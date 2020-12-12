@@ -27,6 +27,16 @@ public class Building {
         fourth = new Floor(FloorNumber.FOURTH);
 
         elevators = new ArrayList<>(4);
+
+        consist = new Elevator(this, "1");
+        Elevator sec =  new Elevator(this, "2");
+        Elevator sec1 =  new Elevator(this, "3");
+        Elevator sec2=  new Elevator(this, "4");
+        Elevator sec3 =  new Elevator(this, "5");
+        elevators.add(sec1);
+        elevators.add(sec);
+        elevators.add(sec2);
+        elevators.add(sec3);
     }
 
     public Floor getFLoor( FloorNumber floorNumber ) {
@@ -65,13 +75,6 @@ public class Building {
         List<Floor> floors = Arrays.asList(ground, first, second, third, fourth);
         Collections.reverse(floors);
         return floors;
-    }
-
-    public List<Elevator> elevators() {
-        List<Elevator> elevators1 = new ArrayList<>();
-        elevators1.add(consist);
-        elevators1.addAll(this.elevators);
-        return elevators1;
     }
 
     @Override

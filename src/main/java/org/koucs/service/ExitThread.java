@@ -7,9 +7,6 @@ import org.koucs.domain.FloorNumber;
 import org.koucs.domain.Person;
 import org.koucs.util.Util;
 
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-
 @Slf4j
 public class ExitThread implements Runnable {
 
@@ -27,7 +24,7 @@ public class ExitThread implements Runnable {
     public void run() {
         try {
             isRunning = true;
-
+            log.info("Exit Thread Çalışıyor.");
             while (true) {
                 // todo rasgele kattan adam alıp o kattaki adamları asansör kuyruğuna koyar.
 
@@ -37,6 +34,7 @@ public class ExitThread implements Runnable {
                 FloorNumber randomFloorNumber = Util.randomFloor();
                 // binadan al
                 Floor floor = building.getFLoor(randomFloorNumber);
+                log.info("Exit Thread {}. kata {} insanı asansör kuyruğuna alacak", randomFloorNumber.num(), size);
                 // insan kadar dön
                 for (int i = 0; i < size; i++ ) {
                     // kattaki insandan bir tane al
@@ -53,12 +51,9 @@ public class ExitThread implements Runnable {
 
         } catch (Exception e) {
             isRunning = false;
-            log.error(e.getMessage());
+            e.printStackTrace();
+            log.error("", e);
         }
-    }
-
-    private static void addTo(BlockingQueue<Person> waitingList , List<Person> personList) {
-        waitingList.addAll(personList);
     }
 
     public boolean isRunning() {

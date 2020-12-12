@@ -30,7 +30,7 @@ public class LoginThread implements Runnable {
         try {
 
             isRunning = true;
-
+            log.info("Login Thread Çalışıyor.");
             while (true) {
 
                 List<Person> personList = Util.randomLoginPerson();
@@ -49,13 +49,16 @@ public class LoginThread implements Runnable {
 
         } catch (Exception e) {
             isRunning = false;
-            log.error(e.getMessage());
+            e.printStackTrace();
+            log.error("", e);
         }
 
     }
 
     private static void addTo(  BlockingQueue<Person> waitingList , List<Person> personList) {
+        log.info("0. kata {} kadar insan ekledi.", personList.size());
         waitingList.addAll(personList);
+        log.info("0. kattaki insan sayısı {} ", waitingList.size());
     }
 
     public boolean isRunning() {

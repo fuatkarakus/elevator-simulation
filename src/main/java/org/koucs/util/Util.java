@@ -6,6 +6,7 @@ import org.koucs.domain.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Util {
 
@@ -37,11 +38,14 @@ public class Util {
     }
 
     public static Integer randomExit() {
-        return new Random().nextInt(5 - 1 + 1) + 1;
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 4 + 1);
+        return randomNum;
     }
 
     public static FloorNumber randomFloor() {
-        return FloorNumber.values()[new Random().nextInt(FloorNumber.values().length) + 1];
+        int i = FloorNumber.values().length ;
+
+        return FloorNumber.values()[new Random().nextInt(i)];
     }
 
 }

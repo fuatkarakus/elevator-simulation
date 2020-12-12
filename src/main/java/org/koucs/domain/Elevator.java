@@ -25,8 +25,11 @@ public class Elevator implements Runnable{
 
     private final BlockingQueue<Person> people;
 
-    public Elevator(Building building) {
+    private final String name;
+
+    public Elevator(Building building, String name) {
         this.building = building;
+        this.name = name;
         this.people = new ArrayBlockingQueue<>(MAX_CAPACITY);
         this.direction = Direction.UP;
     }
@@ -34,24 +37,30 @@ public class Elevator implements Runnable{
     @Override
     public void run() {
         try {
+            isRunning = true;
+            log.info("{}. asansör çalışmaya başladı.", name);
             while (true) {
-                isRunning = true;
 
                 if (direction.equals(Direction.UP)) {
-
+                    log.info("{}. asansör yukarı çıkıyor", name);
                     for (Floor floor : building.upFloors()) {
                         current = floor;
                         // asansörden insan indir
+                        log.info("{}. asansörde bulunan insan sayısı {}", name, people.size());
                         for ( Person person : people) {
+                            int count = 0;
                             if (person.getDestination() == current.getFloorNumber()) {
                                 people.remove(person);
                                 current.getPeople().put(person);
+                                count ++;
                             }
+                            log.info("{}. asansörden indirilen insan sayısı {}", name, count);
                         }
 
                         // asansöre insan alma işlemi
-                        while (current.getElevatorQueue().isEmpty()) {
+                        while (!current.getElevatorQueue().isEmpty()) { // asansör kuyruğunda insanlar varsa onları asansöre al
                             if (people.size() == MAX_CAPACITY) {
+                                log.info("{}. asansörün kapasitesi {}, insan almıyor.", name, people.size());
                                 continue;
                             }
                             people.put(current.getElevatorQueue().take());
@@ -64,18 +73,25 @@ public class Elevator implements Runnable{
                     }
                 }
                 if (direction.equals(Direction.DOWN)) {
+                    log.info("{}. asansör aşağı iniyor", name);
                     for (Floor floor : building.downFloors()) {
                         current = floor;
                         // asansörden insan indir
+                        log.info("{}. asansörde bulunan insan sayısı {}", name, people.size());
                         for ( Person person : people) {
+                            int count = 0;
                             if (person.getDestination() == current.getFloorNumber()) {
+                                people.remove(person);
                                 current.getPeople().put(person);
+                                count ++;
                             }
+                            log.info("{}. asansörden indirilen insan sayısı {}", name, count);
                         }
 
                         // asansöre insan alma işlemi
-                        while (current.getElevatorQueue().isEmpty()) {
+                        while (!current.getElevatorQueue().isEmpty()) { // asansör kuyruğunda insanlar varsa onları asansöre al
                             if (people.size() == MAX_CAPACITY) {
+                                log.info("{}. asansörün kapasitesi {}, insan almıyor.", name, people.size());
                                 continue;
                             }
                             people.put(current.getElevatorQueue().take());
@@ -90,7 +106,8 @@ public class Elevator implements Runnable{
             }
         } catch (Exception e) {
             isRunning = false;
-            log.error(e.getMessage());
+            e.printStackTrace();
+            log.error("", e);
         }
 
     }
@@ -106,6 +123,5 @@ public class Elevator implements Runnable{
     public Floor getCurrent() {
         return current;
     }
-
 
 }

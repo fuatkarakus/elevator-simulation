@@ -14,7 +14,7 @@ public class ControllerThread implements Runnable {
 
     private static final Integer MAX_SIZE = 20;
 
-    private static final Integer WORK = 100;
+    private static final Integer WORK = 200;
 
     private final Building building;
 
@@ -25,10 +25,14 @@ public class ControllerThread implements Runnable {
     @Override
     public void run() {
         try {
+            isRunning = true;
+            log.info("Controller Thread Çalışıyor.");
             while (true) {
 
                 for (Floor floor : building.upFloors()) {
+//                    log.info("Controller thread {}. katta ", floor.getFloorNumber().num());
                     if (floor.getElevatorQueue().size() > MAX_SIZE) {
+                        log.info("{}. katta asansör kuyruğu bekleyenlerin sayısı {}", floor.getFloorNumber().num(), floor.getElevatorQueue().size());
                         // elevatorlardan çalışmayan bir tane alıyoruz
                         Optional<Elevator> elevator =  building.getElevators()
                                 .stream()
@@ -37,20 +41,21 @@ public class ControllerThread implements Runnable {
 
                         // eğer çalışmayan elevator varsa çalıştırıyor. yoksa şimdilik pass geçiyor
                         if (elevator.isPresent()) {
-                            new Thread( elevator.get() );
+                            log.info("Controller Thread bir asansör çalıştırıyor.");
+                            new Thread( elevator.get() ).start();
                         } else {
                             log.info("Tüm asansörler çalışıyor.");
                         }
-
                     }
                 }
 
                 Thread.sleep(WORK);
             }
 
-
-        }catch (Exception e) {
-            log.error(e.getMessage());
+        } catch (Exception e) {
+            isRunning = false;
+            e.printStackTrace();
+            log.error("", e);
         }
     }
 
