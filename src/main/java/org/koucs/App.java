@@ -6,6 +6,10 @@ import org.koucs.service.ControllerThread;
 import org.koucs.service.ExitThread;
 import org.koucs.service.LoginThread;
 
+import java.util.concurrent.*;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 @Slf4j
 public class App {
 
@@ -17,5 +21,14 @@ public class App {
         new Thread(new ControllerThread(building)).start();
         new Thread(building.getConsist()).start();
 
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        executorService.scheduleAtFixedRate(() -> {
+            try {
+                log.info(building.toString());
+            }catch (Exception e ) {
+                log.error("", e);
+            }
+
+        }, 10, 5, SECONDS);
     }
 }

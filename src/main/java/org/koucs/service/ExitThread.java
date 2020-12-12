@@ -28,32 +28,32 @@ public class ExitThread implements Runnable {
             while (true) {
                 // todo rasgele kattan adam alıp o kattaki adamları asansör kuyruğuna koyar.
 
-                // 1. random insan sayısı
+                // random insan sayısı
                 Integer size =  Util.randomExit();
                 // random kat
                 FloorNumber randomFloorNumber = Util.randomFloor();
-                // binadan al
-                Floor floor = building.getFLoor(randomFloorNumber);
+                // binadan al random gelen katı
+                Floor randomFloor = building.getFLoor(randomFloorNumber);
 
-                int kattakiInsanSayisi = floor.getPeople().size();
+                int kattakiInsanSayisi = randomFloor.getPeople().size();
 
                 // insan kadar dön
                 for (int i = 0; i < size; i++ ) {
 
                     // eğer katta insan var ise
-                    if (!floor.getPeople().isEmpty()) {
+                    if (!randomFloor.getPeople().isEmpty()) {
                         // kattaki insandan bir tane al
-                        Person person = floor.getPeople().take();
+                        Person person = randomFloor.getPeople().take();
                         // gitmek istediği yeri 0. kat
                         person.setDestination(FloorNumber.GROUND);
                         // asasnsör kuyruğuna ekle
-                        floor.getElevatorQueue().put(person);
+                        randomFloor.getElevatorQueue().put(person);
                     }
 
                 }
-                int kattakiInsanSayisiAfter = floor.getPeople().size();
+                int kattakiInsanSayisiAfter = randomFloor.getPeople().size();
                 int asansorunAldıgıInsanSayısı = kattakiInsanSayisi- kattakiInsanSayisiAfter;
-                log.info("ExitThread {}. katta {} insanı asansör kuyruğuna aldı. ", randomFloorNumber.num(), asansorunAldıgıInsanSayısı);
+                log.debug("ExitThread {}. katta {} insanı asansör kuyruğuna aldı. ", randomFloorNumber.num(), asansorunAldıgıInsanSayısı);
 
                 Thread.sleep(work);
 

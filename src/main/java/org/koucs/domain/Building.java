@@ -18,10 +18,15 @@ public class Building {
 
     private Elevator consist;
     private List<Elevator> elevators;
-    Elevator sec ;
-    Elevator sec1;
-    Elevator sec2;
-    Elevator sec3;
+    Elevator secondElevator;
+    Elevator thirdElevator;
+    Elevator fourthElevator;
+    Elevator fifthElevator;
+
+//    Thread tSecond;
+//    Thread tThird;
+//    Thread tFourth;
+//    Thread tFifth;
 
     public Building() {
         ground = new Floor(FloorNumber.GROUND);
@@ -33,15 +38,20 @@ public class Building {
         elevators = new ArrayList<>(4);
 
         consist = new Elevator(this, "1");
-        sec =  new Elevator(this, "2");
-        sec1 =  new Elevator(this, "3");
-        sec2=  new Elevator(this, "4");
-        sec3 =  new Elevator(this, "5");
+        secondElevator =  new Elevator(this, "2");
+        thirdElevator =  new Elevator(this, "3");
+        fourthElevator =  new Elevator(this, "4");
+        fifthElevator =  new Elevator(this, "5");
 
-        elevators.add(sec1);
-        elevators.add(sec);
-        elevators.add(sec2);
-        elevators.add(sec3);
+        elevators.add(thirdElevator);
+        elevators.add(secondElevator);
+        elevators.add(fourthElevator);
+        elevators.add(fifthElevator);
+
+//        tSecond = new Thread(secondElevator);
+//        tThird  = new Thread(thirdElevator);
+//        tFourth = new Thread(fourthElevator);
+//        tFifth = new Thread(fifthElevator);
     }
 
     public Floor getFLoor( FloorNumber floorNumber ) {
@@ -106,38 +116,69 @@ public class Building {
 
             .append("5. KAT : \n")
                 .append("\t Katta Bulunan  Insan Sayısı:  ").append(fourth.getPeople().size()).append("\n")
-                .append("\t Katta Bulunan  Asansör Bekleyen Insan Sayısı:  ").append(fourth.getElevatorQueue().size()).append("\n")
+                .append("\t Katta Bulunan  Asansör Bekleyen Insan Sayısı:  ").append(fourth.getElevatorQueue().size()).append("\n");
 
-            .append("1. Asansör \n")
-                .append("\t Durumu :").append(consist.isRunning()).append("\n")
-                .append("\t İçindeki İnsan Sayısı: ").append(consist.getPeople().size()).append("\n")
-                .append("\t Yönü: ").append(consist.getDirection()).append("\n")
-                .append("\t Bulunduğu Kat: ").append(consist.getCurrent().getFloorNumber().num()).append("\n")
 
-            .append("2. Asansör \n")
-                .append("\t Durumu :").append(sec.isRunning()).append("\n")
-                .append("\t İçindeki İnsan Sayısı: ").append(sec.getPeople().size()).append("\n")
-                .append("\t Yönü: ").append(sec.getDirection()).append("\n")
-                .append("\t Bulunduğu Kat: ").append(sec.getCurrent().getFloorNumber().num()).append("\n")
+        if (consist.isRunning()) {
+            sb.append("1. Asansör \n")
+                    .append("\t Durumu :").append(consist.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(consist.getPeople().size()).append("\n")
+                    .append("\t Yönü: ").append(consist.getDirection().name()).append("\n")
+                    .append("\t Bulunduğu Kat: ").append(consist.getCurrent().getFloorNumber().num()).append("\n");
+        } else {
+            sb.append("1. Asansör \n")
+                    .append("\t Durumu :").append(consist.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(consist.getPeople().size()).append("\n");
+        }
+        if (secondElevator.isRunning()){
+            sb.append("2. Asansör \n")
+                    .append("\t Durumu :").append(secondElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(secondElevator.getPeople().size()).append("\n")
+                    .append("\t Yönü: ").append(secondElevator.getDirection().name()).append("\n")
+                    .append("\t Bulunduğu Kat: ").append(secondElevator.getCurrent().getFloorNumber().num()).append("\n");
+        } else {
+            sb.append("2. Asansör \n")
+                    .append("\t Durumu :").append(secondElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(secondElevator.getPeople().size()).append("\n");
+        }
 
-            .append("3. Asansör \n")
-                .append("\t Durumu :").append(sec1.isRunning()).append("\n")
-                .append("\t İçindeki İnsan Sayısı: ").append(sec1.getPeople().size()).append("\n")
-                .append("\t Yönü: ").append(sec1.getDirection()).append("\n")
-                .append("\t Bulunduğu Kat: ").append(sec1.getCurrent().getFloorNumber().num()).append("\n")
+        if (thirdElevator.isRunning()) {
+            sb.append("3. Asansör \n")
+                    .append("\t Durumu :").append(thirdElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(thirdElevator.getPeople().size()).append("\n")
+                    .append("\t Yönü: ").append(thirdElevator.getDirection().name()).append("\n")
+                    .append("\t Bulunduğu Kat: ").append(thirdElevator.getCurrent().getFloorNumber().num()).append("\n");
+        } else {
+            sb.append("3. Asansör \n")
+                    .append("\t Durumu :").append(thirdElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(thirdElevator.getPeople().size()).append("\n");
+        }
 
-            .append("4. Asansör \n")
-                .append("\t Durumu :").append(sec2.isRunning()).append("\n")
-                .append("\t İçindeki İnsan Sayısı: ").append(sec2.getPeople().size()).append("\n")
-                .append("\t Yönü: ").append(sec2.getDirection()).append("\n")
-                .append("\t Bulunduğu Kat: ").append(sec2.getCurrent().getFloorNumber().num()).append("\n")
+        if (fourthElevator.isRunning()) {
+            sb.append("4. Asansör \n")
+                    .append("\t Durumu :").append(fourthElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(fourthElevator.getPeople().size()).append("\n")
+                    .append("\t Yönü: ").append(fourthElevator.getDirection().name()).append("\n")
+                    .append("\t Bulunduğu Kat: ").append(fourthElevator.getCurrent().getFloorNumber().num()).append("\n");
+        } else {
+            sb.append("4. Asansör \n")
+                    .append("\t Durumu :").append(fourthElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(fourthElevator.getPeople().size()).append("\n");
+        }
 
-            .append("5. Asansör \n")
-                .append("\t Durumu :").append(sec3.isRunning()).append("\n")
-                .append("\t İçindeki İnsan Sayısı: ").append(sec3.getPeople().size()).append("\n")
-                .append("\t Yönü: ").append(sec3.getDirection()).append("\n")
-                .append("\t Bulunduğu Kat: ").append(sec3.getCurrent().getFloorNumber().num()).append("\n");
+        if (fifthElevator.isRunning()) {
+            sb.append("5. Asansör \n")
+                    .append("\t Durumu :").append(fifthElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(fifthElevator.getPeople().size()).append("\n")
+                    .append("\t Yönü: ").append(fifthElevator.getDirection().name()).append("\n")
+                    .append("\t Bulunduğu Kat: ").append(fifthElevator.getCurrent().getFloorNumber().num()).append("\n");
+        } else {
+            sb.append("5. Asansör \n")
+                    .append("\t Durumu :").append(fifthElevator.isRunning()).append("\n")
+                    .append("\t İçindeki İnsan Sayısı: ").append(fifthElevator.getPeople().size()).append("\n");
+        }
 
+        sb.append("---------------------------------------------------------------------------------");
         return sb.toString();
     }
 }

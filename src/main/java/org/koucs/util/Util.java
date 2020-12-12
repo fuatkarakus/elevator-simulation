@@ -38,7 +38,7 @@ public class Util {
     }
 
     public static Integer randomExit() {
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 4 + 1);
+        int randomNum = ThreadLocalRandom.current().nextInt(0, 4 + 1);
         return randomNum;
     }
 

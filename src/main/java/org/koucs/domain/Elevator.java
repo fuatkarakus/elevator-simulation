@@ -39,68 +39,91 @@ public class Elevator implements Runnable{
         try {
             isRunning = true;
             log.info("{}. asansör çalışmaya başladı.", name);
-            while (true) {
+            while (isRunning) {
 
-                if (direction.equals(Direction.UP)) {
-                    log.info("{}. asansör yukarı çıkıyor", name);
-                    for (Floor floor : building.upFloors()) {
+                if (direction.equals(Direction.UP)) { // yukarı yöne giderken
+
+                    log.debug("{}. asansör yukarı çıkıyor", name);
+
+                    for (Floor floor : building.upFloors()) { // katları dönüyoruz
                         current = floor;
                         // asansörden insan indir
-                        log.info("{}. asansör {}. katta, {} taşıdığı insan ", name, current.getFloorNumber().num(), people.size());
-                        for ( Person person : people) {
-                            int count = 0;
+                        log.debug("{}. asansör {}. katta, {} taşıdığı insan ", name, current.getFloorNumber().num(), people.size());
+                        int count = 0;
+                        for ( Person person : people) { // asansörün içinde bulunan insanları kata bırakıyoruz.
+
                             if (person.getDestination() == current.getFloorNumber()) {
-                                people.remove(person);
-                                current.getPeople().put(person);
+                                boolean drop = people.remove(person);
+
+                                if (current.getFloorNumber() != GROUND) { // eğer 0. kata indiriyorsak bu insan binadan çıkmış demektir. yani tekrardan bi kata koymaya gerek yok
+                                    current.getPeople().put(person);
+                                }
                                 count ++;
                             }
-                            log.info("{}. asansörden indirilen insan sayısı {}", name, count);
                         }
+                        log.info("{}. asansörden indirilen insan sayısı {}", name, count);
 
-                        // asansöre insan alma işlemi
+
                         while (!current.getElevatorQueue().isEmpty()) { // asansör kuyruğunda insanlar varsa onları asansöre al
                             if (people.size() == MAX_CAPACITY) {
-                                log.info("{}. asansörün kapasitesi {}, insan almıyor.", name, people.size());
-                                continue;
+                                log.debug("{}. asansörün kapasitesi {}, insan almıyor.", name, people.size());
+                                break;
                             }
                             people.put(current.getElevatorQueue().take());
                         }
+
+                        Thread.sleep(WORK);
 
                         if (current.getFloorNumber() == FOURTH) {
                             direction = Direction.DOWN;
+                            break;
                         }
-                        Thread.sleep(WORK);
+
                     }
                 }
+
                 if (direction.equals(Direction.DOWN)) {
-                    log.info("{}. asansör aşağı iniyor", name);
-                    for (Floor floor : building.downFloors()) {
+                    log.debug("{}. asansör aşağı iniyor", name);
+
+                    for (Floor floor : building.downFloors()) { // katları aşağı in
                         current = floor;
                         // asansörden insan indir
-                        log.info("{}. asansörde bulunan insan sayısı {}", name, people.size());
-                        for ( Person person : people) {
-                            int count = 0;
+                        log.debug("{}. asansör {}. katta, {} taşıdığı insan ", name, current.getFloorNumber().num(), people.size());
+
+                        int count = 0;
+                        for ( Person person : people) { // asansörün içinde bulunan insanları kata bırakıyoruz.
+
                             if (person.getDestination() == current.getFloorNumber()) {
-                                people.remove(person);
-                                current.getPeople().put(person);
+                                boolean drop = people.remove(person);
+                                //log.info("insanı bıraktı mı : " + drop);
+
+                                // eğer adam 0. kata bırakıldı ise binadan çıkış yapmış demektir. Dolayısıyla tekrar kattaki insanlara eklemeye gerek yok.
+                                if (current.getFloorNumber() != GROUND) {
+                                    current.getPeople().put(person);
+                                }
+
                                 count ++;
                             }
-                            log.info("{}. asansörden indirilen insan sayısı {}", name, count);
+
                         }
+
+                        log.debug("{}. asansörden indirilen insan sayısı {}", name, count);
 
                         // asansöre insan alma işlemi
                         while (!current.getElevatorQueue().isEmpty()) { // asansör kuyruğunda insanlar varsa onları asansöre al
                             if (people.size() == MAX_CAPACITY) {
-                                log.info("{}. asansörün kapasitesi {}, insan almıyor.", name, people.size());
-                                continue;
+                                log.debug("{}. asansörün kapasitesi {}, insan almıyor.", name, people.size());
+                                break;
                             }
                             people.put(current.getElevatorQueue().take());
                         }
 
+                        Thread.sleep(WORK);
                         if (current.getFloorNumber() == GROUND) {
                             direction = Direction.UP;
+                            break;
                         }
-                        Thread.sleep(WORK);
+
                     }
                 }
             }
@@ -128,4 +151,11 @@ public class Elevator implements Runnable{
         return people;
     }
 
+    public void stop() {
+        isRunning = false;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -6,6 +6,8 @@ import org.koucs.domain.Elevator;
 import org.koucs.domain.Floor;
 
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Slf4j
 public class ControllerThread implements Runnable {
@@ -18,6 +20,8 @@ public class ControllerThread implements Runnable {
 
     private final Building building;
 
+    private final ExecutorService service = Executors.newFixedThreadPool(4);
+
     public ControllerThread(Building building) {
         this.building = building;
     }
@@ -29,10 +33,11 @@ public class ControllerThread implements Runnable {
             log.info("Controller Thread Çalışıyor.");
             while (true) {
 
+                int count = 0;
                 for (Floor floor : building.upFloors()) {
-//                    log.info("Controller thread {}. katta ", floor.getFloorNumber().num());
+
                     if (floor.getElevatorQueue().size() > MAX_SIZE) {
-                        log.info("{}. katta asansör kuyruğu bekleyenlerin sayısı {}", floor.getFloorNumber().num(), floor.getElevatorQueue().size());
+                        log.info("{}. katta asansör bekleyen sayısı {} ", floor.getFloorNumber().num(), floor.getElevatorQueue().size() );
                         // elevatorlardan çalışmayan bir tane alıyoruz
                         Optional<Elevator> elevator =  building.getElevators()
                                 .stream()
@@ -42,12 +47,37 @@ public class ControllerThread implements Runnable {
                         // eğer çalışmayan elevator varsa çalıştırıyor. yoksa şimdilik pass geçiyor
                         if (elevator.isPresent()) {
                             log.info("Controller Thread bir asansör çalıştırıyor.");
-                            new Thread( elevator.get() ).start();
+                            service.submit(elevator.get());
+                            /*
+                            switch (elevator.get().getName()){
+                                case "2":
+                                    building.getTSecond().start();
+                                case "3":
+                                    building.getTThird().start();
+                                case "4":
+                                    building.getTFourth().start();
+                                case "5":
+                                    building.getTFifth().start();
+                            }
+                             */
                         } else {
                             log.info("Tüm asansörler çalışıyor.");
                         }
+                    } else {
+                        // eğer katta asansör bekleyen yoksa countu arttır
+                        count ++;
                     }
+                    Thread.sleep(WORK);
                 }
+
+                // Boşa çalışan asansörleri durdur
+                // eğer count 5 ise yani tüm binada asansör bekleyenlerin sayısı 20 değil ise ve tüm asansörler çalışıyorsa
+//                if (count == 5 && building.getElevators().stream().allMatch(e -> e.isRunning())) {
+//                    building.getTSecond().join();
+//                    building.getTThird().join();
+//                    building.getTFourth().join();
+//                    building.getTFifth().join();
+//                }
 
                 Thread.sleep(WORK);
             }
