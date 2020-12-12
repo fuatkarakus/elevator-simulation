@@ -124,4 +124,8 @@ public class Elevator implements Runnable{
         return current;
     }
 
+    public BlockingQueue<Person> getPeople() {
+        return people;
+    }
+
 }
