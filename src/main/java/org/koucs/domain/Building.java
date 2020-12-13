@@ -17,16 +17,13 @@ public class Building {
     private Floor fourth;
 
     private Elevator consist;
-    private List<Elevator> elevators;
-    Elevator secondElevator;
-    Elevator thirdElevator;
-    Elevator fourthElevator;
-    Elevator fifthElevator;
 
-//    Thread tSecond;
-//    Thread tThird;
-//    Thread tFourth;
-//    Thread tFifth;
+    private List<Elevator> elevators;
+
+    private Elevator secondElevator;
+    private Elevator thirdElevator;
+    private Elevator fourthElevator;
+    private Elevator fifthElevator;
 
     public Building() {
         ground = new Floor(FloorNumber.GROUND);
@@ -48,10 +45,6 @@ public class Building {
         elevators.add(fourthElevator);
         elevators.add(fifthElevator);
 
-//        tSecond = new Thread(secondElevator);
-//        tThird  = new Thread(thirdElevator);
-//        tFourth = new Thread(fourthElevator);
-//        tFifth = new Thread(fifthElevator);
     }
 
     public Floor getFLoor( FloorNumber floorNumber ) {
